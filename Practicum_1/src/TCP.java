@@ -12,8 +12,8 @@ public class TCP {
             ServerSocket socket = new ServerSocket(7896);
 
             while(true) {
-                Socket connectionSocket = socket.accept();
-                ConnectionThread temp = new ConnectionThread(connectionSocket);
+                Socket openedConnection = socket.accept();
+                ConnectionThread temp = new ConnectionThread(openedConnection);
             }
         } catch (IOException e) {
             e.printStackTrace();

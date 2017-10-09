@@ -6,34 +6,20 @@ import java.net.*;
 
 public class client {
     public static void main(String[] args) {
-        String IPAddress;
-        Socket sock = new Socket(IPAddress, 7896);
+        String IPAddress = "localhost";
+        Socket requestSocket = new Socket(IPAddress, 7896);
 
-        //Send file
-        File myFile = new File("E7060v1.2.zip");
-        byte[] mybytearray = new byte[(int) myFile.length()];
+        InputStream in = requestSocket.getInputStream();
+        OutputStream out = new FileOutputStream("aangekomenLangsServer.zip");
 
-        FileInputStream fis = new FileInputStream(myFile);
-        BufferedInputStream bis = new BufferedInputStream(fis);
-        //bis.read(mybytearray, 0, mybytearray.length);
+        byte[] buffer = new byte[1024];
+        Int bytesRead;
+        while ((bytesRead = in.read(buffer)) != -1) {
+            out.write(buffer, 0, bytesRead);
+        }
 
-        DataInputStream dis = new DataInputStream(bis);
-        dis.readFully(mybytearray, 0, mybytearray.length);
-
-        OutputStream os = sock.getOutputStream();
-
-        //Sending file name and file size to the server
-        DataOutputStream dos = new DataOutputStream(os);
-        dos.writeUTF(myFile.getName());
-        dos.writeLong(mybytearray.length);
-        dos.write(mybytearray, 0, mybytearray.length);
-        dos.flush();
-
-        //Sending file data to the server
-        os.write(mybytearray, 0, mybytearray.length);
-        os.flush();
-
-        //Closing socket
-        sock.close();
+        in.close();
+        out.close();
+        requestSocket.close();
     }
 }

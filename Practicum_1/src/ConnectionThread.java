@@ -5,17 +5,28 @@ import java.io.InputStreamReader;
 import java.net.*;
 
 public class ConnectionThread extends Thread {
-    Socket socket;
+    Socket connection;
 
     public ConnectionThread(Socket socket) {
-        this.socket = socket;
+        this.connection = socket;
         this.start();
     }
 
     public void run() {
         try {
-            BufferedReader inputVanClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            DataOutputStream outputNaarClient = new DataOutputStream(socket.getOutputStream());
+            File file = new File("test.zip");
+            InputStream in = new FileInputStream(file);
+            OutputStream = connection.getOutputStream();
+
+            byte[] buffer = new byte[1024];
+            Int bytesRead;
+            while ((bytesRead = in.read(buffer)) != -1) {
+                out.write(buffer, 0, bytesRead);
+            }
+            out.close();
+            in.close();
+            connection.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
