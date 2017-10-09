@@ -9,11 +9,13 @@ public class TCP {
 
     public static void main(String[] args) {
         try {
-            ServerSocket socket = new ServerSocket(7896);
+            ServerSocket socket = new ServerSocket(7899);
 
             while(true) {
+                System.out.println("Waiting ...");
                 Socket openedConnection = socket.accept();
                 ConnectionThread temp = new ConnectionThread(openedConnection);
+
             }
         } catch (IOException e) {
             e.printStackTrace();

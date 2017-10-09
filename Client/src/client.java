@@ -1,25 +1,36 @@
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.*;
 
-public class client {
-    public static void main(String[] args) {
+public class Client {
+    public static void main(String[] args) throws IOException {
         String IPAddress = "localhost";
-        Socket requestSocket = new Socket(IPAddress, 7896);
+        Socket requestSocket = null;
+        try {
+            requestSocket = new Socket(IPAddress, 7896);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         InputStream in = requestSocket.getInputStream();
         OutputStream out = new FileOutputStream("aangekomenLangsServer.zip");
 
         byte[] buffer = new byte[1024];
-        Int bytesRead;
+        int bytesRead;
         while ((bytesRead = in.read(buffer)) != -1) {
-            out.write(buffer, 0, bytesRead);
+            try {
+                out.write(buffer, 0, bytesRead);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        in.close();
-        out.close();
-        requestSocket.close();
+        try {
+            in.close();
+            out.close();
+            requestSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
