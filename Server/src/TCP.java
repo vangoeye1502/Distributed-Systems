@@ -9,10 +9,10 @@ public class TCP {
 
     public static void main(String[] args) {
         try {
-            ServerSocket socket = new ServerSocket(7899);
+            ServerSocket socket = new ServerSocket(7896);
 
             while(true) {
-                System.out.println("Waiting ...");
+                System.out.println("AWAITING CLIENTS ...");
                 Socket openedConnection = socket.accept();
                 ConnectionThread temp = new ConnectionThread(openedConnection);
 
